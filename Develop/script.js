@@ -13,7 +13,11 @@ function renderTime() {
        var day = mydate.getDay();
        var month = mydate.getMonth(); 
        var daym = mydate.getDate();
+<<<<<<< HEAD
        var dayArray = new Array("Sunday,","Monday,","Tuesday,","Wednesday,","Thursday,","Friday,","Saturday,");
+=======
+       var dayArray = new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+>>>>>>> feature/date
        var monthArray = new Array("January","February","March","April","May","June","July","August","September","October","November","December",);
     
 //Date End
@@ -23,6 +27,7 @@ function renderTime() {
         var h = currentTime.getHours();
         var m = currentTime.getMinutes();
         var s = currentTime.getSeconds();
+<<<<<<< HEAD
             if(h == 24){
                 h = 0;
             } else if (h > 12){
@@ -45,6 +50,9 @@ function renderTime() {
                 setTimeout("renderTime()", 1000);
             }
             renderTime();
+=======
+}
+>>>>>>> feature/date
 
 
 //When I scroll I am give time blocks for a standard businedd day
