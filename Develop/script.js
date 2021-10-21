@@ -1,106 +1,67 @@
-//ability to add events to planner
+let data = {};
+const dataStore = window.localStorage;
+const dsKey = 'schedule';
+const dateTimeEl = document.getElementById("currentDay");
+const saveBtnEls = document.querySelectorAll('.saveBtn');
 
+const renderTime = () => {
+    const date = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    dateTimeEl.textContent = date.toLocaleString("en-US", options);
 
+    setTimeout("renderTime()", 1000);
+};
 
-function renderTime() {
-    var mydate = new Date();
-    var year = mydate.getYear();
-    if (year < 1000){
-            year +=1900
+const renderColors = () => {
+    const date = new Date();
+    const hour = date.getHours();
+
+    for (let i = 7; i < 19; i++) {
+        const el = document.getElementById(`text-entry${i}`);
+
+        console.log(hour);
+        let color = 'lightgrey';
+
+        if (hour === i) {
+            color = 'red';
+        } else if (hour < i) {
+            color = 'green';
+        }
+
+        el.style.backgroundColor = color;
     }
+}
 
-    var day = mydate.getDay();
-    var month = mydate.getMonth();
-    var day = mydate.getDate();
-    var dayArray = new Array("Sunday,","Monday,","Tuesday,","Wednesday","Thursday,","Friday,","Saturday,");
-    var monthArray = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+const load = () => {
+    data = JSON.parse(dataStore.getItem(dsKey));
+    console.log(data);
+    for (const [key, value] of Object.entries(data)) {
+        const el = document.getElementById(`text-entry${key}`);
+        el.textContent = value;
+    }
+}
 
-    var currentTime = new Date();
-    var h = currentTime.getHours();
-    var m = currentTime.getMinutes();
-    var s = currentTime.getSeconds();
-        if(h == 24){
-            h = 12;
-        } else if (h > 12){
-            h = h - 0;
-        }
-        if (h < 10) {
-            h = "0" + h;
-        }
-        if ( m < 10) {
-            m = "0" + m;
-        }
-        if(s < 10) {
-            s = "0" + s;
-        }
+const save = (event) => {
+    const hour = event.target.parentElement.id;
+    data[hour] = document.getElementById(`text-entry${hour}`).value;
+    dataStore.setItem(dsKey, JSON.stringify(data));
+    alert('Saved.');
+}
 
-        var myClock = document.getElementById("currentDay");
-        myClock.textContent = "" + dayArray[day]+ " " +monthArray[month]+ " " +year+ " | " +h+ ":" +m+ ":" +s;
-        myClock.innerText = "" + dayArray[day]+ " " +monthArray[month]+ " " +year+ " | " +h+ ":" +m+ ":" +s;
+const initiateDataStore = () => {
+    const emptySchedule = {7: "",8: "",9: "",10: "",11: "",12: "",13: "",14: "",15: "",16: "",17: "",18: ""};
+    if (!dataStore.getItem(dsKey)) dataStore.setItem(dsKey, JSON.stringify(emptySchedule));
+}
+
+const main = () => {
+    initiateDataStore();
+    renderTime();
+    load();
+    renderColors();
     
-        setTimeout("renderTime()", 1000);
-        
+    saveBtnEls.forEach(el => {
+        el.addEventListener('click', save);
+    });
+}
 
-  const rows = document.getElementsByClassName("row");
-        let currentHour = parseInt(renderTime().format('H'));
-
-
-        Array.from(rows).forEach(row => {
-            letrowIDString = row.id,
-            time;
-            if(rowIdString) {
-                row = parseInt(rowIdString);
-            }
-            if (rowHour) {
-                if (currentHour === rowHour){
-                    setColor(row, "Red");
-                
-                }else if ((currentHour < rowHour) && (currentHour > rowHour - 6))
-                setColor(row, "Green");
-
-                }else if ((currentHour > rowHour) && (currentHour < rowHour + 6))
-                setColor(row, "LightGrey");
-                
-                 else {
-                    setColor(row, "white");
-                }
-
-            }
-        )};
-        function setColor(element, color) {
-            element.style.backgroundColor = color;
-          } 
-
-
-          renderTime();
-          function saveData(){
-              localStorage.saveServer
-          }
-
-
-
-
-//When I scroll I am give time blocks for a standard businedd day
-
-
-
-
-//Each time block is color coded for past present or future
-
-
-
-
-//When I click into a time block I can enter an event
-
-
-
-
-// When i click save for that time block the event is saved in local storage
-
-
-
-
-//When i refresh the page, the save persists
-
-
-         
+main();
