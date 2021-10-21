@@ -6,8 +6,8 @@
 3. [How to Install](#howtoinstall)
 4. [Contributors ](#contributors)
 5. [FAQ](#faq)
-3. [Testing](#testing)
-3. [License](#license)
+6. [Testing](#testing)
+7. [License](#license)
 
 ## Introduction 
 Ithoughtthatwastoday is an app that allows people to keep track of their schedule. The data persists in your local storage so it will remain even if you leave the page. You can schedule your tasks on a daily basis and when the hour passes the time slot will turn grey. Tasks that currently need to be completed, for that hour will be highlighted red and future tasks will be highlighted green. The current time and date is also displayed at the top of the page.
@@ -34,7 +34,6 @@ For Questions about this app please reach out to Jakemclark33@gmail.com
 ## Testing
 
 All testing was done in house using console logs.
-
 
 
 ## License
